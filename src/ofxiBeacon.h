@@ -10,10 +10,9 @@
 
 @interface ofxiBeacon : NSObject
 
-+ (ofxiBeacon *)sharedInstanceWithUUIDString:(NSString *)uuid;
-
++ (ofxiBeacon *)sharedInstanceWithUUIDString:(NSString *)uuid serviceIndentifier:(NSString *)serviceIndentifier;
 @property (nonatomic, readonly) NSMutableDictionary *beaconInfo;
-@property (nonatomic) BOOL *doDebug;
+@property (nonatomic) BOOL doDebug;
 
 - (void)recieveBeaconReload;
 

@@ -16,22 +16,23 @@
 @property (nonatomic) CLBeaconRegion *beaconRegion;
 @property (nonatomic) NSMutableDictionary *beaconInfo;
 @property (nonatomic) BOOL beaconReload;
+@property (nonatomic, copy) NSString *uuid;
 
 @end
 @implementation ofxiBeacon
 
-+ (ofxiBeacon *)sharedInstanceWithUUIDString:(NSString *)uuid
++ (ofxiBeacon *)sharedInstanceWithUUIDString:(NSString *)uuid serviceIndentifier:(NSString *)serviceIndentifier
 {
     static ofxiBeacon *_sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _sharedInstance = [[self alloc] initForiBeacon:uuid];
+        _sharedInstance = [[self alloc] initForiBeacon:uuid serviceIndentifier:(NSString *)serviceIndentifier];
     });
     
     return _sharedInstance;
 }
 
-- (id)initForiBeacon:(NSString *)uuid
+- (id)initForiBeacon:(NSString *)uuid serviceIndentifier:(NSString *)serviceIndentifier
 {
     self = [super init];
     if (self) {
@@ -41,13 +42,14 @@
             self.locationManager.delegate = self;
             
             self.proximityUUID = [[NSUUID alloc] initWithUUIDString:uuid];
-            self.beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:_proximityUUID identifier:SERVICE_IDENTIFIER];
+            self.beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:_proximityUUID identifier:serviceIndentifier];
             
             [_locationManager startMonitoringForRegion:_beaconRegion];
             
             self.beaconInfo = [NSMutableDictionary dictionary];
             self.beaconReload = NO;
             self.doDebug = NO;
+            self.uuid = uuid;
             
             NSLog(@"Done init");
         }
@@ -175,7 +177,7 @@
         self.beaconInfo[@"uuid"] = self.uuid;
         
         // maybe, iOS7.1 is not need this compared value
-        NSNumber *maxRssiValue = -20;
+        NSNumber *maxRssiValue = @-20;
         NSComparisonResult result = [rssi compare:maxRssiValue];
         switch (result) {
             case NSOrderedAscending:
