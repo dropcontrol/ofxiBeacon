@@ -9,7 +9,7 @@
 #import "ofxiBeacon.h"
 #import <CoreLocation/CoreLocation.h>
 
-@interface ofxiBeacon () <CLLocationManagerDelegate>
+@interface ofxiBeaconDelegate () <CLLocationManagerDelegate>
 
 @property (nonatomic) CLLocationManager *locationManager;
 @property (nonatomic) NSUUID *proximityUUID;
@@ -19,11 +19,30 @@
 @property (nonatomic, copy) NSString *uuid;
 
 @end
-@implementation ofxiBeacon
 
-+ (ofxiBeacon *)sharedInstanceWithUUIDString:(NSString *)uuid serviceIndentifier:(NSString *)serviceIndentifier
+# pragma mark - C++ class implementations
+ofxiBeacon::ofxiBeacon(const std::string &uuid, const std::string &serviceIndentifier)
 {
-    static ofxiBeacon *_sharedInstance = nil;
+    iBeacon = [ofxiBeaconDelegate sharedInstanceWithUUIDString:[NSString stringWithUTF8String:uuid.c_str()] serviceIndentifier:[NSString stringWithUTF8String:serviceIndentifier.c_str()]];
+}
+
+ofxiBeacon::~ofxiBeacon()
+{
+    // this class is singleton class.
+}
+
+void ofxiBeacon::doDebug(bool flag)
+{
+    iBeacon.doDebug = flag;
+}
+
+
+# pragma mark - obj-c class implementations
+@implementation ofxiBeaconDelegate
+
++ (ofxiBeaconDelegate *)sharedInstanceWithUUIDString:(NSString *)uuid serviceIndentifier:(NSString *)serviceIndentifier
+{
+    static ofxiBeaconDelegate *_sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _sharedInstance = [[self alloc] initForiBeacon:uuid serviceIndentifier:(NSString *)serviceIndentifier];
@@ -141,7 +160,7 @@
                 break;
         }
         
-        // RSSI 受信信号(対数 dBm) Accuracy だいたいの精度(m)
+        // RSSI Âèó‰ø°‰ø°Âè∑(ÂØæÊï∞ dBm) Accuracy „Å†„ÅÑ„Åü„ÅÑ„ÅÆÁ≤æÂ∫¶(m)
         
         [self makeBeaconStatus:@"range" status:range major:nearestBeacon.major minor:nearestBeacon.minor accuracy:[NSNumber numberWithDouble:nearestBeacon.accuracy] rssi:[NSNumber numberWithLong:nearestBeacon.rssi]];
         
