@@ -64,7 +64,7 @@ ofxiBeacon::~ofxiBeacon()
             
             [_locationManager startMonitoringForRegion:_beaconRegion];
             
-            self.beaconInfo = [NSMutableDictionary dictionary];
+            self.beaconInfo = [[NSMutableDictionary alloc] init];
             self.beaconReload = NO;
             self.doDebug = NO;
             self.uuid = uuid;
@@ -158,9 +158,7 @@ ofxiBeacon::~ofxiBeacon()
             default:
                 break;
         }
-        
-        // RSSI Âèó‰ø°‰ø°Âè∑(ÂØæÊï∞ dBm) Accuracy „Å†„ÅÑ„Åü„ÅÑ„ÅÆÁ≤æÂ∫¶(m)
-        
+                
         [self makeBeaconStatus:@"range" status:range major:nearestBeacon.major minor:nearestBeacon.minor accuracy:[NSNumber numberWithDouble:nearestBeacon.accuracy] rssi:[NSNumber numberWithLong:nearestBeacon.rssi]];
         
         if ( _doDebug == YES ) {
@@ -186,6 +184,7 @@ ofxiBeacon::~ofxiBeacon()
         || ( _beaconInfo[@"major"] != [NSNull null] && ![_beaconInfo[@"major"] isEqualToNumber:major])
         || ( _beaconInfo[@"minor"] != [NSNull null] && ![_beaconInfo[@"minor"] isEqualToNumber:minor])
         || _beaconReload == YES ) {
+        
         self.beaconInfo[@"kind"] = kind;
         self.beaconInfo[@"status"] = status;
         self.beaconInfo[@"major"] = major == nil ? [NSNull null] : major;
