@@ -25,10 +25,8 @@
 class ofxiBeacon
 {
     public:
-        ofxiBeacon(const std::string &uuid, const std::string &serviceIndentifier);
+        ofxiBeacon(const std::string &uuid, const std::string &serviceIndentifier, bool debug);
         ~ofxiBeacon();
-    
-        void doDebug(bool flag);
     
     protected:
         ofxiBeaconDelegate *iBeacon;

@@ -21,19 +21,18 @@
 @end
 
 # pragma mark - C++ class implementations
-ofxiBeacon::ofxiBeacon(const std::string &uuid, const std::string &serviceIndentifier)
+ofxiBeacon::ofxiBeacon(const std::string &uuid, const std::string &serviceIndentifier, bool debug)
 {
     iBeacon = [ofxiBeaconDelegate sharedInstanceWithUUIDString:[NSString stringWithUTF8String:uuid.c_str()] serviceIndentifier:[NSString stringWithUTF8String:serviceIndentifier.c_str()]];
+    
+    if ( debug == true ){
+        iBeacon.doDebug = YES;
+    }
 }
 
 ofxiBeacon::~ofxiBeacon()
 {
     // this class is singleton class.
-}
-
-void ofxiBeacon::doDebug(bool flag)
-{
-    iBeacon.doDebug = flag;
 }
 
 
