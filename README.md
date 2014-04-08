@@ -6,56 +6,14 @@ openFrameworks addon for handling iBeacon.
 
 ## Initialize
 
-### sharedInstanceWithUUIDString:serviceIndentifier
+### ofxiBeacon(const std::string &uuid, const std::string &serviceIndentifier, bool debug);
 
 ```
-+ (ofxiBeacon *)sharedInstanceWithUUIDString:(NSString *)uuid serviceIndentifier:(NSString *)serviceIndentifier;
-```
-
-```
-ofxiBeacon *iBeacon;
-//--------------------------------------------------------------
 void ofApp::setup(){
-    NSString *uuid = @"";
-    NSString *serviceIndentifier = @"";
-    iBeacon = [ofxiBeacon sharedInstanceWithUUIDString:uuid serviceIndentifier:serviceIndentifier];
-
-}
-```
-
-## properties
-
-### beaconInfo
-
-```
-@property (nonatomic, readonly) NSMutableDictionary *beaconInfo;
-```
-
-```
-NSMutableDictionary *beaconInfo;
-//--------------------------------------------------------------
-void ofApp::update(){
-    beaconInfo = iBeacon.beaconInfo;
-}
-```
-
-### doDebug
-
-```
-@property (nonatomic) BOOL doDebug;
-```
-
-```
-//--------------------------------------------------------------
-void ofApp::update(){
-    iBeacon.doDebug = YES;
+    std::string uuid( "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" );
+    std::string serviceIndentifier ( "com.example.yourapp" );
+    ofxiBeacon(uuid, serviceIndentifier, true);
 }
 ```
 
 ## methods
-
-### recieveBeaconReload
-
-```
-- (void)recieveBeaconReload;
-```
