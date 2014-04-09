@@ -35,7 +35,7 @@ struct BeaconInfo {
 class ofxiBeacon
 {
     public:
-        ofxiBeacon(const std::string &uuid, const std::string &serviceIndentifier, bool debug);
+        ofxiBeacon(const string &uuid, const string &serviceIndentifier, bool debug);
         ~ofxiBeacon();
     
         BeaconInfo updateBeaconInfo();

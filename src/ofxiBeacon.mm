@@ -21,7 +21,7 @@
 @end
 
 # pragma mark - C++ class implementations
-ofxiBeacon::ofxiBeacon(const std::string &uuid, const std::string &serviceIndentifier, bool debug)
+ofxiBeacon::ofxiBeacon(const string &uuid, const string &serviceIndentifier, bool debug)
 {
     iBeacon = [ofxiBeaconDelegate sharedInstanceWithUUIDString:[NSString stringWithUTF8String:uuid.c_str()] serviceIndentifier:[NSString stringWithUTF8String:serviceIndentifier.c_str()]];
     

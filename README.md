@@ -6,7 +6,7 @@ openFrameworks addon for handling iBeacon.
 
 ## Initialize
 
-### ofxiBeacon(const std::string &uuid, const std::string &serviceIndentifier, bool debug);
+### ofxiBeacon(const string &uuid, const string &serviceIndentifier, bool debug);
 
 #### .h
 ```
@@ -21,8 +21,8 @@ class ofApp : public ofxiOSApp {
 #### .mm
 ```
 void ofApp::setup(){
-    std::string uuid( "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" );
-    std::string serviceIndentifier ( "com.example.yourapp" );
+    string uuid( "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" );
+    string serviceIndentifier ( "com.example.yourapp" );
     ofxiBeacon(uuid, serviceIndentifier, true);
 }
 ```
@@ -31,6 +31,7 @@ void ofApp::setup(){
 
 ### BeaconInfo updateBeaconInfo();
 
+#### .h
 ```
 class ofApp : public ofxiOSApp {
 
@@ -39,6 +40,7 @@ class ofApp : public ofxiOSApp {
 };
 ```
 
+#### .mm
 ```
 //--------------------------------------------------------------
 void ofApp::update(){
