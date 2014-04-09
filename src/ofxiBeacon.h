@@ -22,12 +22,25 @@
 
 
 # pragma mark - C++ class header
+
+struct BeaconInfo {
+    string status;
+    string uuid;
+    int major;
+    int minor;
+    double accuracy;
+    int rssi;
+};
+
 class ofxiBeacon
 {
     public:
         ofxiBeacon(const std::string &uuid, const std::string &serviceIndentifier, bool debug);
         ~ofxiBeacon();
     
+        BeaconInfo updateBeaconInfo();
+        
     protected:
         ofxiBeaconDelegate *iBeacon;
 };
+

@@ -35,6 +35,27 @@ ofxiBeacon::~ofxiBeacon()
     // this class is singleton class.
 }
 
+BeaconInfo ofxiBeacon::updateBeaconInfo()
+{
+    string *status = new string([iBeacon.beaconInfo[@"status"] UTF8String]);
+    string *uuid = new string([iBeacon.beaconInfo[@"uuid"] UTF8String]);
+    int major = [iBeacon.beaconInfo[@"major"] intValue];
+    int minor = [iBeacon.beaconInfo[@"minor"] intValue];
+    double accuracy = [iBeacon.beaconInfo[@"accuracy"] doubleValue];
+    int rssi = [iBeacon.beaconInfo[@"rssi"] intValue];
+    
+    BeaconInfo currentBeaconInfo = {
+        *status,
+        *uuid,
+        major,
+        minor,
+        accuracy,
+        rssi,
+    };
+    
+    return currentBeaconInfo;
+}
+
 
 # pragma mark - obj-c class implementations
 @implementation ofxiBeaconDelegate
