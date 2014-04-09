@@ -214,22 +214,6 @@ BeaconInfo ofxiBeacon::updateBeaconInfo()
         self.beaconInfo[@"rssi"] = rssi == nil ? [NSNull null] : rssi;
         self.beaconInfo[@"uuid"] = self.uuid;
         
-        // maybe, iOS7.1 is not need this compared value
-        NSNumber *maxRssiValue = @-20;
-        NSComparisonResult result = [rssi compare:maxRssiValue];
-        switch (result) {
-            case NSOrderedAscending:
-                
-                if ( ![status isEqualToString:@"unknown"] ){
-//                    [self sendBeaconStatus:_beaconInfo];
-                }
-                
-                break;
-                
-            default:
-                break;
-        }
-        
         if ( _beaconReload == YES) {
             self.beaconReload = NO;
         }
