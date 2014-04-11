@@ -30,13 +30,18 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-
-    ofDrawBitmapString(status, 10, 100);
-    ofDrawBitmapString(uuid, 10, 120);
-    ofDrawBitmapString(ofToString(majorNumber), 10, 140);
-    ofDrawBitmapString(ofToString(minorNumber), 10, 160);
-    ofDrawBitmapString(ofToString(accuracyValue, 15), 10, 180);
-    ofDrawBitmapString(ofToString(rssiValue), 10, 200);
+    ofSetColor(0, 0, 0);
+    ofDrawBitmapString(uuid, 10, 100);
+    ofDrawBitmapString("status: ", 10, 120);
+    ofDrawBitmapString(status, 90, 120);
+    ofDrawBitmapString("major: ", 10, 140);
+    ofDrawBitmapString(ofToString(majorNumber), 90, 140);
+    ofDrawBitmapString("minor: ", 10, 160);
+    ofDrawBitmapString(ofToString(minorNumber), 90, 160);
+    ofDrawBitmapString("accuracy: ", 10, 180);
+    ofDrawBitmapString(ofToString(accuracyValue, 15), 90, 180);
+    ofDrawBitmapString("rssi: ", 10, 200);
+    ofDrawBitmapString(ofToString(rssiValue), 90, 200);
 
 }
 
