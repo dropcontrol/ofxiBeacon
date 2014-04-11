@@ -44,7 +44,7 @@ BeaconInfo ofxiBeacon::updateBeaconInfo()
     string uuid = iBeacon.beaconInfo[@"uuid"] != NULL ? string((char *)[iBeacon.beaconInfo[@"uuid"] UTF8String]) : "";
     int major = iBeacon.beaconInfo[@"major"] != [NSNull null] ? [iBeacon.beaconInfo[@"major"] intValue] : 0;
     int minor = iBeacon.beaconInfo[@"minor"] != [NSNull null] ? [iBeacon.beaconInfo[@"minor"] intValue] : 0;
-    double accuracy = iBeacon.beaconInfo[@"accuracy"] != [NSNull null] ? [iBeacon.beaconInfo[@"accuracy"] intValue] : 0;
+    double accuracy = iBeacon.beaconInfo[@"accuracy"] != [NSNull null] ? [iBeacon.beaconInfo[@"accuracy"] doubleValue] : 0;
     int rssi = iBeacon.beaconInfo[@"rssi"] != [NSNull null] ? [iBeacon.beaconInfo[@"rssi"] intValue] : 0;
     
     BeaconInfo currentBeaconInfo = {
@@ -204,6 +204,11 @@ BeaconInfo ofxiBeacon::updateBeaconInfo()
 
 - (void)makeBeaconStatus:(NSString *)kind status:(NSString *)status major:(NSNumber *)major minor:(NSNumber *)minor accuracy:(NSNumber *)accuracy rssi:(NSNumber *)rssi
 {
+    self.beaconInfo[@"uuid"] = self.uuid;
+    self.beaconInfo[@"accuracy"] = accuracy == nil ? [NSNull null] : accuracy;
+    self.beaconInfo[@"rssi"] = rssi == nil ? [NSNull null] : rssi;
+
+
     if (![_beaconInfo[@"status"] isEqualToString:status]
         || ( _beaconInfo[@"major"] != [NSNull null] && ![_beaconInfo[@"major"] isEqualToNumber:major])
         || ( _beaconInfo[@"minor"] != [NSNull null] && ![_beaconInfo[@"minor"] isEqualToNumber:minor])
@@ -213,14 +218,12 @@ BeaconInfo ofxiBeacon::updateBeaconInfo()
         self.beaconInfo[@"status"] = status;
         self.beaconInfo[@"major"] = major == nil ? [NSNull null] : major;
         self.beaconInfo[@"minor"] = minor == nil ? [NSNull null] : minor;
-        self.beaconInfo[@"accuracy"] = accuracy == nil ? [NSNull null] : accuracy;
-        self.beaconInfo[@"rssi"] = rssi == nil ? [NSNull null] : rssi;
-        self.beaconInfo[@"uuid"] = self.uuid;
         
         if ( _beaconReload == YES) {
             self.beaconReload = NO;
         }
     }
+    
 }
 
 - (void)recieveBeaconReload

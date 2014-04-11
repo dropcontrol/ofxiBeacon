@@ -35,7 +35,7 @@ void ofApp::draw(){
     ofDrawBitmapString(uuid, 10, 120);
     ofDrawBitmapString(ofToString(majorNumber), 10, 140);
     ofDrawBitmapString(ofToString(minorNumber), 10, 160);
-    ofDrawBitmapString(ofToString(accuracyValue), 10, 180);
+    ofDrawBitmapString(ofToString(accuracyValue, 15), 10, 180);
     ofDrawBitmapString(ofToString(rssiValue), 10, 200);
 
 }
