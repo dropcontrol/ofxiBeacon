@@ -21,6 +21,9 @@
 @end
 
 # pragma mark - C++ class implementations
+
+ofxiBeacon::ofxiBeacon(){};
+
 ofxiBeacon::ofxiBeacon(const string &uuid, const string &serviceIndentifier, bool debug)
 {
     iBeacon = [ofxiBeaconDelegate sharedInstanceWithUUIDString:[NSString stringWithUTF8String:uuid.c_str()] serviceIndentifier:[NSString stringWithUTF8String:serviceIndentifier.c_str()]];
@@ -32,21 +35,21 @@ ofxiBeacon::ofxiBeacon(const string &uuid, const string &serviceIndentifier, boo
 
 ofxiBeacon::~ofxiBeacon()
 {
-    // this class is singleton class.
+    // this class is singleton class as obj-c class.
 }
 
 BeaconInfo ofxiBeacon::updateBeaconInfo()
 {
-    string *status = new string([iBeacon.beaconInfo[@"status"] UTF8String]);
-    string *uuid = new string([iBeacon.beaconInfo[@"uuid"] UTF8String]);
-    int major = [iBeacon.beaconInfo[@"major"] intValue];
-    int minor = [iBeacon.beaconInfo[@"minor"] intValue];
-    double accuracy = [iBeacon.beaconInfo[@"accuracy"] doubleValue];
-    int rssi = [iBeacon.beaconInfo[@"rssi"] intValue];
+    string status = iBeacon.beaconInfo[@"status"] != NULL ? string((char *)[iBeacon.beaconInfo[@"status"] UTF8String]) : "";
+    string uuid = iBeacon.beaconInfo[@"uuid"] != NULL ? string((char *)[iBeacon.beaconInfo[@"uuid"] UTF8String]) : "";
+    int major = iBeacon.beaconInfo[@"major"] != [NSNull null] ? [iBeacon.beaconInfo[@"major"] intValue] : 0;
+    int minor = iBeacon.beaconInfo[@"minor"] != [NSNull null] ? [iBeacon.beaconInfo[@"minor"] intValue] : 0;
+    double accuracy = iBeacon.beaconInfo[@"accuracy"] != [NSNull null] ? [iBeacon.beaconInfo[@"accuracy"] intValue] : 0;
+    int rssi = iBeacon.beaconInfo[@"rssi"] != [NSNull null] ? [iBeacon.beaconInfo[@"rssi"] intValue] : 0;
     
     BeaconInfo currentBeaconInfo = {
-        *status,
-        *uuid,
+        status,
+        uuid,
         major,
         minor,
         accuracy,
