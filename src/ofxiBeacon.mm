@@ -61,11 +61,6 @@ BeaconInfo ofxiBeacon::updateBeaconInfo()
     return currentBeaconInfo;
 }
 
-bool ofxiBeacon::didStartMonitoringForRegion()
-{
-    return iBeacon.didStartMonitoringForRegion;
-}
-
 # pragma mark - obj-c class implementations
 @implementation ofxiBeaconDelegate
 
@@ -211,12 +206,12 @@ bool ofxiBeacon::didStartMonitoringForRegion()
 - (void)makeBeaconStatus:(NSString *)kind status:(NSString *)status major:(NSNumber *)major minor:(NSNumber *)minor accuracy:(NSNumber *)accuracy rssi:(NSNumber *)rssi
 {
     self.beaconInfo[@"kind"] = kind;
-    self.beaconInfo[@"uuid"] = self.uuid;
-    self.beaconInfo[@"accuracy"] = accuracy == nil ? [NSNull null] : accuracy;
-    self.beaconInfo[@"rssi"] = rssi == nil ? [NSNull null] : rssi;
     self.beaconInfo[@"status"] = status;
+    self.beaconInfo[@"uuid"] = self.uuid;
     self.beaconInfo[@"major"] = major == nil ? [NSNull null] : major;
     self.beaconInfo[@"minor"] = minor == nil ? [NSNull null] : minor;
+    self.beaconInfo[@"accuracy"] = accuracy == nil ? [NSNull null] : accuracy;
+    self.beaconInfo[@"rssi"] = rssi == nil ? [NSNull null] : rssi;
 
 }
 

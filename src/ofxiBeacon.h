@@ -15,7 +15,6 @@
 + (ofxiBeaconDelegate *)sharedInstanceWithUUIDString:(NSString *)uuid serviceIndentifier:(NSString *)serviceIndentifier;
 @property (nonatomic, readonly) NSMutableDictionary *beaconInfo;
 @property (nonatomic) BOOL doDebug;
-@property (nonatomic) BOOL didStartMonitoringForRegion;
 
 @end
 
