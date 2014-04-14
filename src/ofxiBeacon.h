@@ -15,8 +15,7 @@
 + (ofxiBeaconDelegate *)sharedInstanceWithUUIDString:(NSString *)uuid serviceIndentifier:(NSString *)serviceIndentifier;
 @property (nonatomic, readonly) NSMutableDictionary *beaconInfo;
 @property (nonatomic) BOOL doDebug;
-
-- (void)recieveBeaconReload;
+@property (nonatomic) BOOL didStartMonitoringForRegion;
 
 @end
 
@@ -24,6 +23,7 @@
 # pragma mark - C++ class header
 
 struct BeaconInfo {
+    string kind;
     string status;
     string uuid;
     int major;
@@ -40,7 +40,8 @@ class ofxiBeacon
         ~ofxiBeacon();
     
         BeaconInfo updateBeaconInfo();
-        
+        bool didStartMonitoringForRegion();
+    
     protected:
         ofxiBeaconDelegate *iBeacon;
 };

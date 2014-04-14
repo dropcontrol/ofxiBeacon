@@ -40,6 +40,7 @@ ofxiBeacon::~ofxiBeacon()
 
 BeaconInfo ofxiBeacon::updateBeaconInfo()
 {
+    string kind = iBeacon.beaconInfo[@"kind"] != NULL ? string((char *)[iBeacon.beaconInfo[@"kind"] UTF8String]) : "";
     string status = iBeacon.beaconInfo[@"status"] != NULL ? string((char *)[iBeacon.beaconInfo[@"status"] UTF8String]) : "";
     string uuid = iBeacon.beaconInfo[@"uuid"] != NULL ? string((char *)[iBeacon.beaconInfo[@"uuid"] UTF8String]) : "";
     int major = iBeacon.beaconInfo[@"major"] != [NSNull null] ? [iBeacon.beaconInfo[@"major"] intValue] : 0;
@@ -48,6 +49,7 @@ BeaconInfo ofxiBeacon::updateBeaconInfo()
     int rssi = iBeacon.beaconInfo[@"rssi"] != [NSNull null] ? [iBeacon.beaconInfo[@"rssi"] intValue] : 0;
     
     BeaconInfo currentBeaconInfo = {
+        kind,
         status,
         uuid,
         major,
@@ -59,6 +61,10 @@ BeaconInfo ofxiBeacon::updateBeaconInfo()
     return currentBeaconInfo;
 }
 
+bool ofxiBeacon::didStartMonitoringForRegion()
+{
+    return iBeacon.didStartMonitoringForRegion;
+}
 
 # pragma mark - obj-c class implementations
 @implementation ofxiBeaconDelegate
@@ -204,33 +210,14 @@ BeaconInfo ofxiBeacon::updateBeaconInfo()
 
 - (void)makeBeaconStatus:(NSString *)kind status:(NSString *)status major:(NSNumber *)major minor:(NSNumber *)minor accuracy:(NSNumber *)accuracy rssi:(NSNumber *)rssi
 {
+    self.beaconInfo[@"kind"] = kind;
     self.beaconInfo[@"uuid"] = self.uuid;
     self.beaconInfo[@"accuracy"] = accuracy == nil ? [NSNull null] : accuracy;
     self.beaconInfo[@"rssi"] = rssi == nil ? [NSNull null] : rssi;
+    self.beaconInfo[@"status"] = status;
+    self.beaconInfo[@"major"] = major == nil ? [NSNull null] : major;
+    self.beaconInfo[@"minor"] = minor == nil ? [NSNull null] : minor;
 
-
-    if (![_beaconInfo[@"status"] isEqualToString:status]
-        || ( _beaconInfo[@"major"] != [NSNull null] && ![_beaconInfo[@"major"] isEqualToNumber:major])
-        || ( _beaconInfo[@"minor"] != [NSNull null] && ![_beaconInfo[@"minor"] isEqualToNumber:minor])
-        || _beaconReload == YES ) {
-        
-        self.beaconInfo[@"kind"] = kind;
-        self.beaconInfo[@"status"] = status;
-        self.beaconInfo[@"major"] = major == nil ? [NSNull null] : major;
-        self.beaconInfo[@"minor"] = minor == nil ? [NSNull null] : minor;
-        
-        if ( _beaconReload == YES) {
-            self.beaconReload = NO;
-        }
-    }
-    
-}
-
-- (void)recieveBeaconReload
-{
-    NSLog(@"__FUNCTION__ : %s", __FUNCTION__);
-    NSLog(@"Set beacon reload");
-    self.beaconReload = YES;
 }
 
 
