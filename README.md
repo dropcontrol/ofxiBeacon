@@ -47,6 +47,7 @@ class ofApp : public ofxiOSApp {
 //--------------------------------------------------------------
 void ofApp::update(){
     beaconInfo = iBeacon.updateBeaconInfo();
+    string kind = beaconInfo.status;
     string status = beaconInfo.status;
     string uuid = beaconInfo.uuid;
     int major = beaconInfo.major;

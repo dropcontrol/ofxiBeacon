@@ -31,7 +31,9 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
     ofSetColor(0, 0, 0);
-    ofDrawBitmapString(uuid, 10, 100);
+    ofDrawBitmapString(uuid, 10, 80);
+    ofDrawBitmapString("kind: ", 10, 100);
+    ofDrawBitmapString(kind, 90, 100);
     ofDrawBitmapString("status: ", 10, 120);
     ofDrawBitmapString(status, 90, 120);
     ofDrawBitmapString("major: ", 10, 140);
