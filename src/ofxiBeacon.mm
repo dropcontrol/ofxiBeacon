@@ -15,7 +15,6 @@
 @property (nonatomic) NSUUID *proximityUUID;
 @property (nonatomic) CLBeaconRegion *beaconRegion;
 @property (nonatomic) NSMutableDictionary *beaconInfo;
-@property (nonatomic) BOOL beaconReload;
 @property (nonatomic, copy) NSString *uuid;
 
 @end
@@ -90,7 +89,6 @@ BeaconInfo ofxiBeacon::updateBeaconInfo()
             [_locationManager startMonitoringForRegion:_beaconRegion];
             
             self.beaconInfo = [[NSMutableDictionary alloc] init];
-            self.beaconReload = NO;
             self.doDebug = NO;
             self.uuid = uuid;
             
