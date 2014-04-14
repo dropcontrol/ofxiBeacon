@@ -39,7 +39,6 @@ class ofxiBeacon
         ~ofxiBeacon();
     
         BeaconInfo updateBeaconInfo();
-        bool didStartMonitoringForRegion();
     
     protected:
         ofxiBeaconDelegate *iBeacon;
