@@ -3,8 +3,8 @@
 //  ofxiBeaconSample
 //
 //  Created by hiroshi yamato on 3/19/14.
-//
-//
+//  Copyright (c) 2014 Hiroshi Yamato
+//  This software is released under the MIT License, see LICENSE.md
 
 #import "ofxiBeacon.h"
 #import <CoreLocation/CoreLocation.h>
@@ -26,7 +26,7 @@ ofxiBeacon::ofxiBeacon(){};
 ofxiBeacon::ofxiBeacon(const string &uuid, const string &serviceIndentifier, bool debug)
 {
     iBeacon = [ofxiBeaconDelegate sharedInstanceWithUUIDString:[NSString stringWithUTF8String:uuid.c_str()] serviceIndentifier:[NSString stringWithUTF8String:serviceIndentifier.c_str()]];
-    
+
     if ( debug == true ){
         iBeacon.doDebug = YES;
     }
@@ -46,7 +46,7 @@ BeaconInfo ofxiBeacon::updateBeaconInfo()
     int minor = iBeacon.beaconInfo[@"minor"] != [NSNull null] ? [iBeacon.beaconInfo[@"minor"] intValue] : 0;
     double accuracy = iBeacon.beaconInfo[@"accuracy"] != [NSNull null] ? [iBeacon.beaconInfo[@"accuracy"] doubleValue] : 0;
     int rssi = iBeacon.beaconInfo[@"rssi"] != [NSNull null] ? [iBeacon.beaconInfo[@"rssi"] intValue] : 0;
-    
+
     BeaconInfo currentBeaconInfo = {
         kind,
         status,
@@ -56,7 +56,7 @@ BeaconInfo ofxiBeacon::updateBeaconInfo()
         accuracy,
         rssi,
     };
-    
+
     return currentBeaconInfo;
 }
 
@@ -70,7 +70,7 @@ BeaconInfo ofxiBeacon::updateBeaconInfo()
     dispatch_once(&onceToken, ^{
         _sharedInstance = [[self alloc] initForiBeacon:uuid serviceIndentifier:(NSString *)serviceIndentifier];
     });
-    
+
     return _sharedInstance;
 }
 
@@ -82,16 +82,16 @@ BeaconInfo ofxiBeacon::updateBeaconInfo()
         if ([CLLocationManager isRangingAvailable]) {
             self.locationManager = [[CLLocationManager alloc] init];;
             self.locationManager.delegate = self;
-            
+
             self.proximityUUID = [[NSUUID alloc] initWithUUIDString:uuid];
             self.beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:_proximityUUID identifier:serviceIndentifier];
-            
+
             [_locationManager startMonitoringForRegion:_beaconRegion];
-            
+
             self.beaconInfo = [[NSMutableDictionary alloc] init];
             self.doDebug = NO;
             self.uuid = uuid;
-            
+
             NSLog(@"Done init");
         }
     }
@@ -132,7 +132,7 @@ BeaconInfo ofxiBeacon::updateBeaconInfo()
 {
     //  region is ENTERED.
     [self makeBeaconStatus:@"region" status:@"enter" major:nil minor:nil accuracy:nil rssi:nil];
-    
+
     if ([region isMemberOfClass:[CLBeaconRegion class]] && [CLLocationManager isRangingAvailable])
     {
         [_locationManager startRangingBeaconsInRegion:(CLBeaconRegion *)region];
@@ -143,7 +143,7 @@ BeaconInfo ofxiBeacon::updateBeaconInfo()
 {
     // region is EXIT.
     [self makeBeaconStatus:@"region" status:@"exit" major:nil minor:nil accuracy:nil rssi:nil];
-    
+
     if ([region isMemberOfClass:[CLBeaconRegion class]] && [CLLocationManager isRangingAvailable]) {
         [_locationManager stopRangingBeaconsInRegion:(CLBeaconRegion *)region];
     }
@@ -153,7 +153,7 @@ BeaconInfo ofxiBeacon::updateBeaconInfo()
 {
     // region is FAIL
     [self makeBeaconStatus:@"monitor" status:@"fail" major:nil minor:nil accuracy:nil rssi:nil];
-    
+
     NSString *errorStr = [error localizedDescription];
     NSLog(@"Monitoring did fail:%@", errorStr);
 }
@@ -162,9 +162,9 @@ BeaconInfo ofxiBeacon::updateBeaconInfo()
 {
     if (beacons.count > 0) {
         CLBeacon *nearestBeacon = beacons.firstObject;
-        
+
         NSString *range;
-        
+
         switch (nearestBeacon.proximity) {
             case CLProximityImmediate:
                 range = @"immediate";
@@ -181,9 +181,9 @@ BeaconInfo ofxiBeacon::updateBeaconInfo()
             default:
                 break;
         }
-                
+
         [self makeBeaconStatus:@"range" status:range major:nearestBeacon.major minor:nearestBeacon.minor accuracy:[NSNumber numberWithDouble:nearestBeacon.accuracy] rssi:[NSNumber numberWithLong:nearestBeacon.rssi]];
-        
+
         if ( _doDebug == YES ) {
             NSString *message = [NSString stringWithFormat:@"status:%@, major:%@, minor:%@, accuracy:%f, rssi:%ld",  range, nearestBeacon.major, nearestBeacon.minor, nearestBeacon.accuracy, (long)nearestBeacon.rssi];
             [self sendLocalNotificationForMessage:message];

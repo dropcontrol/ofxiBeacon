@@ -56,3 +56,6 @@ void ofApp::update(){
     int rssi = beaconInfo.rssi;
 }
 ```
+## LICENSE
+
+This software is released under the MIT License, see LICENSE.md

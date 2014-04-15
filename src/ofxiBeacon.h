@@ -3,8 +3,8 @@
 //  ofxiBeaconSample
 //
 //  Created by hiroshi yamato on 3/19/14.
-//
-//
+//  Copyright (c) 2014 Hiroshi Yamato
+//  This software is released under the MIT License, see LICENSE.md
 
 #import <Foundation/Foundation.h>
 #import "ofMain.h"
@@ -37,10 +37,9 @@ class ofxiBeacon
         ofxiBeacon();
         ofxiBeacon(const string &uuid, const string &serviceIndentifier, bool debug);
         ~ofxiBeacon();
-    
+
         BeaconInfo updateBeaconInfo();
-    
+
     protected:
         ofxiBeaconDelegate *iBeacon;
 };
-
