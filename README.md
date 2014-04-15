@@ -24,7 +24,7 @@ void ofApp::setup(){
     string uuid( "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" );
     string serviceIndentifier ( "com.example.yourapp" );
     ofxiBeadon();
-    ofxiBeacon(uuid, serviceIndentifier, true);
+    iBeacon = ofxiBeacon(uuid, serviceIndentifier, true);
 }
 ```
 if debug is true, sending beacon info to LocalNotification.
