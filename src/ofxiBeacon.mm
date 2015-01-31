@@ -92,6 +92,8 @@ BeaconInfo ofxiBeacon::updateBeaconInfo()
             self.doDebug = NO;
             self.uuid = uuid;
 
+            [self.locationManager requestAlwaysAuthorization];
+
             NSLog(@"Done init");
         }
     }
